@@ -1,15 +1,21 @@
 import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Button,
+  FlatList,
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import InputTodo from "./components/todo/input.todo";
+import ListTodo from "./components/todo/list";
 
 export default function App() {
-  const [name, setName] = useState<string>("minh");
-  const [age, setAge] = useState<number>(54);
-  const [person, setPerson] = useState({
-    name: "a",
-    age: 3,
-  });
-
-  const [todoList, setTodoList] = useState([
+  const [todoList, setTodoList] = useState<ITodo[]>([
     { id: 1, title: "Learn React Native" },
     { id: 2, title: "Learn React.js" },
     { id: 3, title: "Watching Netflix" },
@@ -19,25 +25,28 @@ export default function App() {
     { id: 7, title: "CR 7" },
   ]);
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>hello !</Text>
-      <Text style={styles.text}>{person.age}</Text>
-      <Text style={styles.text}>{JSON.stringify(person)}</Text>
-      <TextInput
-        onChangeText={(value) => setName(value)}
-        autoCapitalize="words"
-        autoCorrect
-        style={{ borderBlockColor: "red", borderWidth: 1, padding: 10 }}
-      />
-      <Button title="add new" onPress={() => alert("ok")} />
+  function randomInteger(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
-      <View>
-        {todoList.map((todo) => {
-          return <Text>{todo.title}</Text>;
-        })}
+  const addTodo = (title: string) => {
+    alert(title);
+    const todo = { id: randomInteger(1, 1000000), title: title };
+    setTodoList([...todoList, todo]);
+  };
+
+  const deleteTodo = (id: number) => {
+    const newTodo = todoList.filter((todo) => todo.id != id);
+    setTodoList(newTodo);
+  };
+
+  return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss}>
+      <View style={styles.container}>
+        <InputTodo addTodo={addTodo} />
+        <ListTodo todoList={todoList} deleteTodo={deleteTodo} />
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
