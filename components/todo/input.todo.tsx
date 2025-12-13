@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Alert, Button, TextInput, View } from "react-native";
+import {
+  Alert,
+  Button,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import MineButton from "../button/my.button";
 
 interface Iprops {
   addTodo: (v: string) => void;
@@ -43,7 +51,11 @@ const InputTodo = (props: Iprops) => {
           style={{ borderBlockColor: "red", borderWidth: 1, padding: 10 }}
         />
       </View>
-      <Button title="add new" onPress={() => handleTodo()} />
+      <AntDesign name="pluscircle" size={24} color="black" />
+
+      {/* <Button title="add new" onPress={() => handleTodo()} /> */}
+
+      <MineButton title="add new" onPress={handleTodo} />
     </>
   );
 };

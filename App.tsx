@@ -1,13 +1,7 @@
 import { useState } from "react";
 import {
-  Alert,
-  Button,
-  FlatList,
   Keyboard,
-  ScrollView,
   StyleSheet,
-  Text,
-  TextInput,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
