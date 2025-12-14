@@ -1,0 +1,96 @@
+import "react-native-gesture-handler";
+
+import React from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
+const Drawer = createDrawerNavigator();
+
+// =================== Details Screen ===================
+function DetailsScreen({ navigation, route }: any) {
+  const { userId, name } = route.params || {};
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Details Screen</Text>
+
+      {userId && <Text>User ID: {userId}</Text>}
+      {name && <Text>Name: {name}</Text>}
+
+      <Button title="Go back" onPress={() => navigation.goBack()} />
+    </View>
+  );
+}
+
+// =================== Home Screen ===================
+function HomeScreen({ navigation }: any) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Home Screen</Text>
+
+      <Button
+        title="Go Details (no params)"
+        onPress={() => navigation.navigate("Article")}
+      />
+
+      <View style={{ marginVertical: 10 }}>
+        <Button
+          title="Go user id = 1"
+          onPress={() =>
+            navigation.navigate("Article", {
+              userId: 1,
+              name: "minh",
+            })
+          }
+        />
+      </View>
+
+      <View style={{ marginVertical: 10 }}>
+        <Button
+          title="Go user id = 2"
+          onPress={() =>
+            navigation.navigate("Article", {
+              userId: 2,
+              name: "minh 2",
+            })
+          }
+        />
+      </View>
+    </View>
+  );
+}
+
+// =================== App ===================
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator>
+        <Drawer.Screen
+          name="Feed"
+          component={HomeScreen}
+          options={{ title: "Trang chủ" }}
+        />
+        <Drawer.Screen
+          name="Article"
+          component={DetailsScreen}
+          options={{ title: "Chi tiết" }}
+        />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
+
+// =================== Styles ===================
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+});
